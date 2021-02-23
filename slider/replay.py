@@ -440,7 +440,8 @@ class Replay:
                   library=None,
                   client=None,
                   save=False,
-                  retrieve_beatmap=True):
+                  retrieve_beatmap=True,
+                  beatmap=None):
         """Read in a ``Replay`` object from a ``.osr`` file on disk.
 
         Parameters
@@ -474,6 +475,7 @@ class Replay:
                 client=client,
                 save=save,
                 retrieve_beatmap=retrieve_beatmap,
+                beatmap=beatmap
             )
 
     @classmethod
@@ -483,7 +485,8 @@ class Replay:
                        library=None,
                        client=None,
                        save=False,
-                       retrieve_beatmap=True):
+                       retrieve_beatmap=True,
+                       beatmap=None):
         """Read in a list of ``Replay`` objects from a directory of ``.osr``
         files.
 
@@ -518,6 +521,7 @@ class Replay:
                 client=client,
                 save=save,
                 retrieve_beatmap=retrieve_beatmap,
+                beatmap=beatmap
             )
             for p in os.scandir(path)
             if p.name.endswith('.osr')
@@ -530,7 +534,8 @@ class Replay:
                   library=None,
                   client=None,
                   save=False,
-                  retrieve_beatmap=True):
+                  retrieve_beatmap=True,
+                  beatmap=None):
         """Read in a ``Replay`` object from an open file object.
 
         Parameters
@@ -562,7 +567,8 @@ class Replay:
             library=library,
             client=client,
             save=save,
-            retrieve_beatmap=retrieve_beatmap
+            retrieve_beatmap=retrieve_beatmap,
+            beatmap=beatmap
         )
 
     @classmethod
@@ -572,7 +578,8 @@ class Replay:
               library=None,
               client=None,
               save=False,
-              retrieve_beatmap=True):
+              retrieve_beatmap=True,
+              beatmap=None):
         """Parse a replay from ``.osr`` file data.
 
         Parameters
@@ -649,8 +656,6 @@ class Replay:
                 beatmap = client.beatmap(
                     beatmap_md5=beatmap_md5,
                 ).beatmap(save=save)
-        else:
-            beatmap = None
 
         return cls(
             mode=mode,
