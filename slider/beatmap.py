@@ -684,12 +684,33 @@ class Slider(HitObject):
             1
         )
 
+        curve = Curve.from_kind_and_points(slider_type, points, pixel_length)
+
+        class RepeatedCurve:
+            def __init__(self, curve, repeat):
+                self.curve = curve
+                self.repeat = repeat
+
+            def __call__(self, t):
+                if self.repeat == 0:
+                    return self.curve(t)
+                s = t%(1/self.repeat) * self.repeat
+                if int(t*self.repeat) % 2 == 0:
+                    return self.curve(s)
+                return self.curve(1 - s)
+
+            @lazyval
+            def hard_rock(self):
+                return RepeatedCurve(curve.hard_rock, repeat)
+
+        repeated_curve = RepeatedCurve(curve, repeat)
+
         return cls(
             position,
             time,
             time + duration,
             hitsound,
-            Curve.from_kind_and_points(slider_type, points, pixel_length),
+            repeated_curve,
             repeat,
             pixel_length,
             ticks,
