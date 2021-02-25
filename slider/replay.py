@@ -161,7 +161,7 @@ def _process_slider(obj, rdata, head_hit, rad, scores):
     tick_ts = list(orange(obj.tick_rate, obj.num_beats, obj.tick_rate))
     missed_points = 0 if head_hit else 1
     for tick in tick_ts:
-        bi = bisect.bisect_left(t_changes, tick)
+        bi = bisect.bisect_left(t_changes, tick/max(tick_ts))
         if bi % 2 == 0:
             # missed a tick
             if tick is tick_ts[-1]:
